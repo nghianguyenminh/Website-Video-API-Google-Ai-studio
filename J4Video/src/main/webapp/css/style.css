@@ -1,0 +1,482 @@
+/* Import font Roboto (cho văn bản) và Montserrat (cho tiêu đề) */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap');
+
+:root {
+    --bg-color: #111111;       /* Nền đen sâu */
+    --card-bg: #1f1f1f;        /* Nền thẻ phim */
+    --text-color: #e0e0e0;     /* Màu chữ trắng xám */
+    --primary-color: #d32f2f;  /* Đỏ đậm */
+    --accent-color: #f39c12;   /* Vàng kim */
+    --hover-overlay: rgba(0, 0, 0, 0.7);
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Roboto', sans-serif; /* Font không chân cho toàn bộ web */
+    padding-top: 80px; /* Tránh nội dung bị Header che mất */
+}
+
+/* --- HEADER NÂNG CẤP (Đã Fix lỗi hiển thị) --- */
+.navbar-vanlo {
+    background-color: rgba(10, 10, 10, 0.9); /* Tăng độ tối nền chút để chữ rõ hơn */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 8px 0; /* Giảm padding trên dưới để header gọn hơn */
+    transition: all 0.3s ease;
+}
+
+/* Logo: Giảm kích thước để hài hòa */
+.brand-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5rem; /* Giảm từ 1.8rem xuống 1.5rem */
+    font-weight: 900;
+    background: linear-gradient(to right, #f39c12, #ffeb3b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-shadow: 0 0 15px rgba(243, 156, 18, 0.2);
+    margin-right: 20px; /* Tạo khoảng cách an toàn với menu */
+}
+
+/* Menu Item: Giảm size chữ và chỉnh lại gạch chân */
+.nav-link {
+    color: #ccc !important;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem; /* Giảm từ 0.95rem xuống 0.85rem cho thoáng */
+    text-transform: uppercase;
+    margin: 0 5px; /* Giảm margin 2 bên để các mục xích lại gần nhau hơn, tránh bị đè */
+    position: relative;
+    transition: color 0.3s;
+    padding-bottom: 5px; /* Tạo khoảng trống cho gạch chân */
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--accent-color) !important;
+}
+
+/* Hiệu ứng gạch chân (Chỉ áp dụng cho các link thường) */
+/* Dùng :not(.user-pill) để loại trừ nút Tài khoản ra */
+.nav-link:not(.user-pill)::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px; /* Độ dày thanh mảnh */
+    bottom: 0; /* Nằm sát mép dưới */
+    left: 0;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease-in-out;
+    box-shadow: 0 0 5px var(--accent-color); /* Thêm chút phát sáng cho đẹp */
+}
+
+/* Khi hover thì gạch chân chạy ra 100% */
+.nav-link:not(.user-pill):hover::after {
+    width: 100%;
+}
+
+/* --- XỬ LÝ RIÊNG CHO DROPDOWN & USER PILL --- */
+
+/* Fix lỗi gạch chân đè lên Tài khoản: Tắt hoàn toàn gạch chân ở User Pill */
+.user-pill::after {
+    display: none !important;
+    content: none !important;
+}
+
+.category::after {
+    display: none !important;
+    content: none !important;
+}
+
+/* User Pill: Style riêng biệt hình viên thuốc */
+.user-pill {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 6px 15px !important; /* Padding gọn gàng */
+    border-radius: 30px;
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.3s;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Khoảng cách giữa icon/avatar và tên */
+}
+
+.user-pill:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 10px rgba(243, 156, 18, 0.15);
+    transform: translateY(-1px);
+}
+
+/* Chỉnh lại Search bar cho nhỏ lại tương ứng */
+.search-form {
+    position: relative;
+}
+.search-input {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid transparent;
+    border-radius: 50px;
+    padding: 6px 15px 6px 35px; /* Giảm padding chút */
+    color: #fff;
+    width: 200px; /* Thu nhỏ chiều rộng mặc định */
+    font-size: 0.85rem;
+    transition: all 0.3s;
+}
+
+.search-input:focus {
+    background: #000;
+    border-color: var(--accent-color);
+    width: 300px; /* Dãn rộng ra khi gõ */
+    box-shadow: 0 0 15px rgba(243, 156, 18, 0.2);
+    outline: none;
+}
+
+.search-icon-btn {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    pointer-events: none;
+}
+
+/* --- DROPDOWN MENU --- */
+.dropdown-menu-vanlo {
+    background-color: rgba(20, 20, 20, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid #333;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    padding: 5px;
+    border-radius: 8px;
+    margin-top: 10px !important;
+    min-width: 180px; /* Đảm bảo menu không quá nhỏ */
+}
+
+.dropdown-item {
+    color: #ccc;
+    font-size: 0.85rem; /* Font nhỏ đồng bộ */
+    padding: 8px 15px;
+    border-radius: 5px;
+}
+
+/* --- MOVIE CARD --- */
+.movie-card {
+    background-color: transparent;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.poster-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    aspect-ratio: 2/3;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.movie-poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.movie-card:hover .movie-poster {
+    transform: scale(1.1);
+}
+
+.play-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.movie-card:hover .play-overlay {
+    opacity: 1;
+}
+
+.play-btn {
+    font-size: 3rem;
+    color: var(--accent-color);
+    filter: drop-shadow(0 0 10px rgba(0,0,0,0.8));
+}
+
+.movie-title {
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-top: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.3s;
+    font-family: 'Roboto', sans-serif;
+}
+
+.movie-card:hover .movie-title {
+    color: var(--accent-color);
+}
+
+.episode-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: linear-gradient(45deg, #d32f2f, #b71c1c);
+    color: white;
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    border-radius: 4px;
+    font-weight: bold;
+    z-index: 2;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* --- TRENDING SLIDER --- */
+.trending-section {
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.trending-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
+.trending-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.trending-scroll-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding-bottom: 20px;
+    cursor: grab;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    user-select: none;
+}
+
+.trending-scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+.trending-scroll-container.active {
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+}
+
+.trending-card {
+    min-width: 200px;
+    max-width: 200px;
+    position: relative;
+    transition: transform 0.3s;
+}
+.trending-card:hover .movie-poster{
+    transform: scale(1.08);
+}
+
+.rank-number {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 4.5rem;
+    font-weight: 900;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.1);
+    position: absolute;
+    bottom: -15px;
+    right: -5px;
+    z-index: 0;
+    font-style: italic;
+    -webkit-text-stroke: 0px;
+}
+
+.rank-1 { color: #f39c12 !important; opacity: 1; text-shadow: 2px 2px 0px rgba(0,0,0,0.5); }
+.rank-2 { color: #bdc3c7 !important; opacity: 0.8; }
+.rank-3 { color: #d35400 !important; opacity: 0.8; }
+
+.trending-info {
+    position: relative;
+    z-index: 1;
+    margin-top: 10px;
+} 
+
+/* --- AUTH PAGE (LOGIN/REGISTER) THEO MẪU MỚI (GLASSMORPHISM) --- */
+.auth-container {
+    /* Đặt z-index cao để đè lên padding của body nếu cần thiết */
+    position: relative; 
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Hình nền Tiên Hiệp */
+    /* LƯU Ý: Bạn nên tải ảnh này về máy và lưu vào thư mục /img/ để tránh bị mất ảnh trong tương lai */
+    background: url('https://4kwallpapers.com/images/wallpapers/fantasy-girl-magical-light-forest-butterflies-dreamy-2560x1440-2780.jpg') no-repeat center center/cover;
+}
+
+/* Lớp phủ màu tối */
+.auth-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 0;
+}
+
+.auth-card {
+    position: relative;
+    z-index: 1;
+    background: rgba(30, 30, 30, 0.75);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 50px 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+    max-width: 450px;
+    color: #fff;
+}
+
+.btn-close-auth {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #aaa;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.btn-close-auth:hover {
+    color: var(--accent-color);
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.auth-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #f39c12, #d35400);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+    font-size: 1.5rem;
+    color: white;
+    box-shadow: 0 5px 15px rgba(243, 156, 18, 0.4);
+}
+
+.auth-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+
+/* Form Styles */
+.form-group-custom {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.form-label-custom {
+    font-size: 0.9rem;
+    color: #ccc;
+    margin-bottom: 8px;
+    display: block;
+    font-weight: 500;
+}
+
+.input-custom {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px 15px;
+    border-radius: 10px;
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s;
+    outline: none;
+}
+
+.input-custom:focus {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.1);
+}
+
+.password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 42px;
+    color: #888;
+    cursor: pointer;
+}
+
+.password-toggle:hover {
+    color: white;
+}
+
+.btn-auth-submit {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #f39c12, #d35400);
+    color: white;
+    font-weight: bold;
+    border: none;
+    font-size: 1rem;
+    margin-top: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-auth-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(243, 156, 18, 0.4);
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+.auth-footer a {
+    color: var(--accent-color);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+} 
